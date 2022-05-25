@@ -1,0 +1,13 @@
+<p>add-edit-department works!</p>
+<form >
+    <div class="mb-3">
+      <label for="name" class="form-label">Deparment Name</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="DepartmentName" name="DepartmentName">
+    </div>
+    <button type="submit" (click)="addDepartment()" class="btn btn-primary" *ngIf="department.id==0">
+        Submit
+    </button>
+    <button type="submit" (click)="editDepartment()" class="btn btn-primary" *ngIf="department.id!=0">
+        Save Changes
+    </button>
+</form>
