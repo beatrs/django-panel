@@ -40,12 +40,22 @@ export class ManageDataService {
   }
 
   updateEmployee(employee:any) {
+    console.log(employee);
+    if (employee.photo === '') {
+      this.getEmployee(employee.id).subscribe((res:any) => {
+        employee.photo = res.photo;
+      })
+    }
     return this.http.put(this.APIUrl + '/employee/', employee);
   }
 
-  deleteEmployee(employee:any) {
-    return this.http.delete(this.APIUrl + '/employee/', employee);
+  deleteEmployee(id:any) {
+    return this.http.delete(this.APIUrl + `/employee/${id}`);
   }
+
+  getEmployee(id:any) {
+    return this.http.get(this.APIUrl + `/employee/${id}`);
+  } 
 
 
 }

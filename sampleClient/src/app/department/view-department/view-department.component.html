@@ -1,4 +1,4 @@
-<p>view-department works!</p>
+<!-- <p>view-department works!</p> -->
 
 
 <table class="table table-striped">
@@ -14,8 +14,7 @@
             <td>{{ i+1 }}</td>
             <td>{{ department.name }}</td>
             <td>
-                <button class="btn btn-light mr-1"
-                data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="edit(department)">
+                <button class="btn btn-light mr-1" (click)="editDept(department)">
                     Edit
                 </button>
                 <button class="btn btn-danger mr-1" (click)="delete(department.id)">
@@ -26,6 +25,7 @@
     </tbody>
 </table>
 
+<button class="btn btn-outline-primary mb-2 me-2" (click)="addDept()">Add New Department</button>
 
 <!-- * Modal -->
 
@@ -48,17 +48,4 @@
     </div>
 </div> -->
 
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title">Modal title</h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.close('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-        <app-add-edit-department [department]="department" (closeRef)="close()" *ngIf="ActivateAddEditComponent" ></app-add-edit-department>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-    </div>
-</ng-template>
 
-<button class="btn btn-outline-primary mb-2 me-2" (click)="openVerticallyCentered(content)">Add New Department</button>

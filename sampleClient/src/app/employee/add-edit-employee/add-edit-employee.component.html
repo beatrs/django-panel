@@ -1,1 +1,35 @@
-<p>add-edit-employee works!</p>
+<!-- <p>add-edit-employee works!</p> -->
+
+<div class="modal-header">
+    <h4 class="modal-title">{{ ModalTitle || '' }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+  </div>
+  <div class="modal-body">
+    <form #empForm="ngForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Employee Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="EmployeeName" name="name">
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Department Name</label>
+            <input type="text" class="form-control" id="department" [(ngModel)]="EmpDeptName" name="department">
+          </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Date Hired</label>
+            <input type="date" class="form-control" id="date_hired" [(ngModel)]="EmpDateHired" name="date_hired">
+          </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Photo</label>
+            <input type="file" class="form-control" id="photo" [(ngModel)]="EmpPhotoURL" name="photo">
+          </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="closeModal()">Close</button>
+    <button type="submit" (click)="addEmployee()" class="btn btn-primary" *ngIf="isNew">
+        Submit
+    </button>
+    <button type="submit" (click)="editEmployee(empForm.value)" class="btn btn-primary" *ngIf="!isNew">
+        Save Changes
+    </button>
+  </div>

@@ -11,21 +11,24 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class AddEditDepartmentComponent implements OnInit {
 
   @Input() department: any;
+  @Input() isNew: boolean = false;
+  @Input() ModalTitle: any;
   DepartmentID:string = '';
   DepartmentName:string = '';
-  @Output() closeRef : EventEmitter<any> = new EventEmitter();
+  // @Output() closeRef : EventEmitter<any> = new EventEmitter();
 
   constructor(
     private dataService: ManageDataService,
     private activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    this.DepartmentID = this.department.id;
-    this.DepartmentName = this.department.name;
-    console.log(this.department.name);
+    if (this.department){
+      this.DepartmentName = this.department.name;
+      this.DepartmentID = this.department.id;
+    }
   }
 
-  closeModal(msg:string) {
+  closeModal(msg:string='') {
     this.activeModal.close(msg);
   }
 
@@ -35,13 +38,6 @@ export class AddEditDepartmentComponent implements OnInit {
       id: this.DepartmentID,
       name: this.DepartmentName
     };
-
-    // this.dataService.addDepartment(newDept).subscribe(response => {
-    //   if (response) {
-    //     alert('Department successfully added!');
-    //   }
-    // });
-    // this.closeModal();
     this.dataService.addDepartment(newDept)
       .subscribe(response => {
         if (response)
@@ -49,17 +45,14 @@ export class AddEditDepartmentComponent implements OnInit {
       });
   }
 
-  editDepartment() {
-    const update = {
-      id: this.DepartmentID,
-      name: this.DepartmentName
-    };
-
-    this.dataService.updateDepartment(update).subscribe(response => {
-      if (response) {
-        alert('Department successfully updated!');
-      }
-    })
+  editDepartment(updatedDept:any) {
+    updatedDept.id = this.department.id;
+    this.dataService.updateDepartment(updatedDept)
+      .subscribe(response => {
+        if (response) {
+          this.closeModal('Department successfully updated!');
+        }
+      });
 
   }
 

@@ -1,1 +1,33 @@
-<p>view-employee works!</p>
+<!-- <p>view-employee works!</p> -->
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Department Name</th>
+            <th>Date Hired</th>
+            <th>Photo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let employee of EmployeeList; let i = index">
+            <td>{{ i+1 }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.department }}</td>
+            <td>{{ employee.date_hired }}</td>
+            <td>{{ employee.photo }}</td>
+            <td>
+                <button class="btn btn-light mr-1" (click)="editEmp(employee)">
+                    Edit
+                </button>
+                <button class="btn btn-danger mr-1" (click)="delete(employee.id)">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<button class="btn btn-outline-primary mb-2 me-2" (click)="addEmp()">Add New Employee</button>

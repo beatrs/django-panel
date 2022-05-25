@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ManageDataService } from 'src/app/shared/manage-data.service'; 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddEditDepartmentComponent } from '../add-edit-department/add-edit-department.component';
 
 @Component({
   selector: 'app-view-department',
@@ -11,7 +12,7 @@ export class ViewDepartmentComponent implements OnInit {
 
   DepartmentList : any[] = [];
   ModalTitle: string = '';
-  ActivateAddEditComponent: boolean = false;
+  // ActivateAddEditComponent: boolean = false;
   department: any;
 
 
@@ -31,27 +32,35 @@ export class ViewDepartmentComponent implements OnInit {
   } 
 
   openVerticallyCentered(content:any) {
-    this.add();
+    // this.add();
     const modalRef = this.modalService.open(content, { centered: true });
     
     modalRef.result.then((res) => console.log(res));
   }
 
-  add() {
-    console.log('button clicked');
-    this.department = {
-      id: 0,
-      name: ""
-    };
-
-    this.ModalTitle = "Add Department";
-    this.ActivateAddEditComponent = true;
+  addDept() {
+    const modalRef = this.modalService.open(AddEditDepartmentComponent, {centered: true});
+    modalRef.componentInstance.ModalTitle = 'Add Department';
+    modalRef.componentInstance.isNew = true;
+    modalRef.result.then((res) => {
+      if (res !== '')
+        alert(res);
+     
+      this.refreshDepartmentList();
+    });
   }
 
-  edit(selectedDepartment:any) {
-    this.department = selectedDepartment;
-    this.ModalTitle = "Edit Department";
-    this.ActivateAddEditComponent = true;
+  editDept(selectedDepartment:any) {
+    const modalRef = this.modalService.open(AddEditDepartmentComponent, {centered: true});
+    modalRef.componentInstance.ModalTitle = 'Edit Department';
+    modalRef.componentInstance.isNew = false;
+    modalRef.componentInstance.department = selectedDepartment;
+    modalRef.result.then((res) => {
+      if (res !== '')
+        alert(res);
+
+      this.refreshDepartmentList();
+    });
   }
 
   // TODO: add modal for confirmation
@@ -64,12 +73,11 @@ export class ViewDepartmentComponent implements OnInit {
     this.DepartmentList = this.DepartmentList.filter((dept) => dept.id !== selectedDepartment)
   }
 
-  close() {
-    this.ActivateAddEditComponent = false;
-    this.modalService.dismissAll();
-    this.refreshDepartmentList();
-    console.log("close function triggered");
-  }
+  // close() {
+  //   this.modalService.dismissAll();
+  //   this.refreshDepartmentList();
+  //   console.log("close function triggered");
+  // }
 
 
 }
